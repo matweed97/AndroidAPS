@@ -162,10 +162,15 @@
     <string name="a11y_graph_scale_24h">biểu đồ 24 giờ</string>
     <string name="a11y_insulin_label">insulin</string>
     <string name="chart_menu">Tùy chọn biểu đồ</string>
+    <string name="overview_cgm">CGM</string>
+    <string name="overview">Overview</string>
+    <string name="overview_shortname">HOME</string>
     <string name="description_overview">Hiển thị trạng thái hiện tại của vòng lặp và các nút cho những thao tác thường dùng nhất</string>
     <string name="show_calibration_button_summary">Gửi hiệu chuẩn đến xDrip+ (hãy đảm bảo rằng tùy chọn \'Accept Calibrations\' đã được bật trong phần Cài đặt liên ứng dụng của xDrip+).</string>
     <string name="show_cgm_button_summary">Mở xDrip+ hoặc ứng dụng Dexcom (bạn có thể dùng nút quay lại để trở về AAPS).</string>
+    <string name="constraints_violation">Vượt giới hạn cho phép</string>
     <string name="keep_screen_on_summary">Ngăn Android tắt màn hình. Tính năng này sẽ tiêu thụ rất nhiều năng lượng khi không cắm nguồn.</string>
+    <string name="treatments">Lịch sử điều trị</string>
     <string name="carb_increment_button_message">Số lượng carb sẽ được thêm khi nhấn nút</string>
     <string name="insulin_increment_button_message">Lượng insulin sẽ được thêm khi nhấn nút</string>
     <string name="firstinsulinincrement">Liều insulin ban đầu</string>
@@ -183,11 +188,17 @@
     <string name="enablesuperbolus_summary">Bật chức năng superbolus trong Bolus Wizard. Không nên bật cho đến khi bạn hiểu rõ chức năng này. VIỆC SỬ DỤNG MÀ KHÔNG HIỂU CÓ THỂ GÂY QUÁ LIỀU INSULIN!</string>
     <string name="enablebolusreminder_summary">Dùng nhắc nhở tiêm bolus sau (post-bolus) qua Bolus Wizard</string>
     <!--    OverviewMenu-->
+    <string name="overview_show_predictions">Dự đoán</string>
+    <string name="overview_show_treatments">Lịch sử điều trị</string>
+    <string name="overview_show_deviations">Độ lệch</string>
     <string name="overview_show_cob">Lượng carb đang hấp thụ</string>
     <string name="overview_show_iob">Insulin đang còn tác dụng</string>
+    <string name="overview_show_basals">Basal</string>
     <string name="overview_show_abs_insulin">Insulin tuyệt đối”</string>
+    <string name="overview_show_variable_sens">Độ nhạy thay đổi</string>
     <string name="prediction_shortname">PRED</string>
     <string name="abs_insulin_shortname">ABS</string>
+    <string name="treatments_shortname">TREAT</string>
     <string name="temp_basal_overview_short_name">T:</string>
     <!-- Skins -->
     <string name="buttonson_description">Các nút luôn được hiển thị ở phía dưới màn hình</string>
