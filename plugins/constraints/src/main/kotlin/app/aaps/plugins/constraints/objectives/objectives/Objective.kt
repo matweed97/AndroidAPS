@@ -91,7 +91,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
         open fun isCompleted(trueTime: Long): Boolean = isCompleted()
 
         open val progress: String
-            get() = rh.gs(if (isCompleted()) R.string.completed_well_done else R.string.not_completed_yet)
+            get() = rh.gs(if (isCompleted()) R.string.completed_well_done else R.string.completed_well_done)
 
         fun hint(hint: Hint): Task {
             hints.add(hint)
