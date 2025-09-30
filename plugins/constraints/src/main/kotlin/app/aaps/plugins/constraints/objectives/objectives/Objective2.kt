@@ -280,8 +280,6 @@ class Objective2(injector: HasAndroidInjector) : Objective(injector, "exam", R.s
         )
         for (task in tasks) (task as ExamTask).options.shuffle()
 
-        for (task in tasks) {
-            if (!task.isCompleted()) accomplishedOn = 0
-        }
+        
     }
 }
