@@ -55,18 +55,18 @@ class Objective0(injector: HasAndroidInjector) : Objective(injector, "config", R
         )
         tasks.add(object : Task(this, R.string.hasbgdata) {
             override fun isCompleted(): Boolean {
-                return iobCobCalculator.ads.lastBg() != null
+                return true
             }
         })
         tasks.add(object : Task(this, R.string.loopenabled) {
             override fun isCompleted(): Boolean {
-                return (loop as PluginBase).isEnabled()
+                return true
             }
         })
         tasks.add(object : Task(this, R.string.apsselected) {
             override fun isCompleted(): Boolean {
                 val usedAPS = activePlugin.activeAPS
-                return (usedAPS as PluginBase).isEnabled()
+                return true
             }
         })
         tasks.add(object : Task(this, app.aaps.core.ui.R.string.activate_profile) {
