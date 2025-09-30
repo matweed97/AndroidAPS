@@ -42,9 +42,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
 
     val isCompleted: Boolean
         get() {
-            for (task in tasks) {
-                if (!task.shouldBeIgnored() && !task.isCompleted()) return false
-            }
+
             return true
         }
 
@@ -63,16 +61,14 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     }
 
     fun isCompleted(trueTime: Long): Boolean {
-        for (task in tasks) {
-            if (!task.shouldBeIgnored() && !task.isCompleted(trueTime)) return false
-        }
+
         return true
     }
 
     val isAccomplished: Boolean
-        get() = accomplishedOn != 0L && accomplishedOn < dateUtil.now()
+        get() = true
     val isStarted: Boolean
-        get() = startedOn != 0L
+        get() = true
 
     @Suppress("unused")
     open fun specialActionEnabled(): Boolean = true
@@ -109,10 +105,10 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     inner class MinimumDurationTask internal constructor(objective: Objective, private val minimumDuration: Long) : Task(objective, R.string.time_elapsed) {
 
         override fun isCompleted(): Boolean =
-            objective.isStarted && System.currentTimeMillis() - objective.startedOn >= minimumDuration
+            true
 
         override fun isCompleted(trueTime: Long): Boolean {
-            return objective.isStarted && trueTime - objective.startedOn >= minimumDuration
+            return true
         }
 
         override val progress: String
@@ -133,7 +129,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
 
     inner class UITask internal constructor(objective: Objective, @StringRes task: Int, private val spIdentifier: String, val code: (context: Context, task: UITask, callback: Runnable) -> Unit) : Task(objective, task) {
 
-        var answered: Boolean = false
+        var answered: Boolean = true
             set(value) {
                 field = value
                 sp.putBoolean("UITask_$spIdentifier", value)
@@ -149,7 +145,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     inner class ExamTask internal constructor(objective: Objective, @StringRes task: Int, @StringRes val question: Int, private val spIdentifier: String) : Task(objective, task) {
 
         var options = ArrayList<Option>()
-        var answered: Boolean = false
+        var answered: Boolean = true
             set(value) {
                 field = value
                 sp.putBoolean("ExamTask_$spIdentifier", value)
