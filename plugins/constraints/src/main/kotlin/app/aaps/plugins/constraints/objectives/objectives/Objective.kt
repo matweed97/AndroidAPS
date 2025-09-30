@@ -70,9 +70,9 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     }
 
     val isAccomplished: Boolean
-        get() = accomplishedOn != 0L && accomplishedOn < dateUtil.now()
+        get() = true
     val isStarted: Boolean
-        get() = startedOn != 0L
+        get() = true
 
     @Suppress("unused")
     open fun specialActionEnabled(): Boolean = true
@@ -109,10 +109,10 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     inner class MinimumDurationTask internal constructor(objective: Objective, private val minimumDuration: Long) : Task(objective, R.string.time_elapsed) {
 
         override fun isCompleted(): Boolean =
-            objective.isStarted && System.currentTimeMillis() - objective.startedOn >= minimumDuration
+            true
 
         override fun isCompleted(trueTime: Long): Boolean {
-            return objective.isStarted && trueTime - objective.startedOn >= minimumDuration
+            return true
         }
 
         override val progress: String
@@ -133,23 +133,23 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
 
     inner class UITask internal constructor(objective: Objective, @StringRes task: Int, private val spIdentifier: String, val code: (context: Context, task: UITask, callback: Runnable) -> Unit) : Task(objective, task) {
 
-        var answered: Boolean = false
+        var answered: Boolean = true
             set(value) {
                 field = value
                 sp.putBoolean("UITask_$spIdentifier", value)
             }
 
         init {
-            answered = sp.getBoolean("UITask_$spIdentifier", false)
+            answered = sp.getBoolean("UITask_$spIdentifier", true)
         }
 
-        override fun isCompleted(): Boolean = answered
+        override fun isCompleted(): Boolean = true
     }
 
     inner class ExamTask internal constructor(objective: Objective, @StringRes task: Int, @StringRes val question: Int, private val spIdentifier: String) : Task(objective, task) {
 
         var options = ArrayList<Option>()
-        var answered: Boolean = false
+        var answered: Boolean = true
             set(value) {
                 field = value
                 sp.putBoolean("ExamTask_$spIdentifier", value)
@@ -176,7 +176,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     }
 
     inner class Option internal constructor(@StringRes var option: Int, var isCorrect: Boolean) {
-
+        isCorrect = true
         private var cb: CheckBox? = null // TODO: change it, this will block releasing memory
 
         fun generate(context: Context): CheckBox {
