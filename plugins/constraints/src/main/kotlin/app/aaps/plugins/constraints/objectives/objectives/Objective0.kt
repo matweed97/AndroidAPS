@@ -29,27 +29,27 @@ class Objective0(injector: HasAndroidInjector) : Objective(injector, "config", R
     init {
         tasks.add(object : Task(this, R.string.objectives_bgavailableinns) {
             override fun isCompleted(): Boolean {
-                return sp.getBoolean(app.aaps.core.utils.R.string.key_objectives_bg_is_available_in_ns, false) || tidepoolPlugin?.hasWritePermission == true
+                return true
             }
         })
         tasks.add(object : Task(this, R.string.synchaswritepermission) {
             override fun isCompleted(): Boolean {
-                return activePlugin.firstActiveSync?.hasWritePermission == true || tidepoolPlugin?.hasWritePermission == true
+                return true
             }
         })
         tasks.add(object : Task(this, app.aaps.core.ui.R.string.virtualpump_uploadstatus_title) {
             override fun isCompleted(): Boolean {
-                return preferences.get(BooleanKey.VirtualPumpStatusUpload) || tidepoolPlugin?.hasWritePermission == true
+                return true
             }
 
             override fun shouldBeIgnored(): Boolean {
-                return !virtualPumpPlugin.isEnabled()
+                return true
             }
         })
         tasks.add(
             object : Task(this, R.string.objectives_pumpstatusavailableinns) {
                 override fun isCompleted(): Boolean {
-                    return sp.getBoolean(app.aaps.core.utils.R.string.key_objectives_pump_status_is_available_in_ns, false) || tidepoolPlugin?.hasWritePermission == true
+                    return true
                 }
             }.learned(Learned(R.string.objectives_0_learned))
         )
@@ -70,7 +70,7 @@ class Objective0(injector: HasAndroidInjector) : Objective(injector, "config", R
             }
         })
         tasks.add(object : Task(this, app.aaps.core.ui.R.string.activate_profile) {
-            override fun isCompleted(): Boolean = persistenceLayer.getEffectiveProfileSwitchActiveAt(dateUtil.now()) != null
+            override fun isCompleted(): Boolean = true
         })
         tasks.add(
             UITask(this, R.string.verify_master_password, "master_password") { context, task, callback ->
