@@ -17,13 +17,14 @@ class Objective6(injector: HasAndroidInjector) : Objective(injector, "maxiob", R
         tasks.add(MinimumDurationTask(this, T.days(1).msecs()))
         tasks.add(
             object : Task(this, R.string.closedmodeenabled) {
-                override fun isCompleted(): Boolean = true
+                override fun isCompleted(): Boolean = ApsMode.fromString(preferences.get(StringKey.LoopApsMode)) == ApsMode.CLOSED
             })
         tasks.add(
             object : Task(this, R.string.maxiobset) {
 
                 override fun isCompleted(): Boolean {
-                    true
+                    val maxIOB = constraintChecker.getMaxIOBAllowed().value()
+                    return maxIOB > 0
                 }
             }.learned(Learned(R.string.objectives_maxiob_learned))
         )

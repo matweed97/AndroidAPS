@@ -42,7 +42,9 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
 
     val isCompleted: Boolean
         get() {
-
+            for (task in tasks) {
+                if (!task.shouldBeIgnored() && !task.isCompleted()) return false
+            }
             return true
         }
 
@@ -61,14 +63,16 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     }
 
     fun isCompleted(trueTime: Long): Boolean {
-
+        for (task in tasks) {
+            if (!task.shouldBeIgnored() && !task.isCompleted(trueTime)) return false
+        }
         return true
     }
 
     val isAccomplished: Boolean
-        get() = true
+        get() = accomplishedOn != 0L && accomplishedOn < dateUtil.now()
     val isStarted: Boolean
-        get() = true
+        get() = startedOn != 0L
 
     @Suppress("unused")
     open fun specialActionEnabled(): Boolean = true
@@ -87,7 +91,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
         open fun isCompleted(trueTime: Long): Boolean = isCompleted()
 
         open val progress: String
-            get() = rh.gs(if (isCompleted()) R.string.completed_well_done else R.string.completed_well_done)
+            get() = rh.gs(if (isCompleted()) R.string.completed_well_done else R.string.not_completed_yet)
 
         fun hint(hint: Hint): Task {
             hints.add(hint)
@@ -105,10 +109,10 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     inner class MinimumDurationTask internal constructor(objective: Objective, private val minimumDuration: Long) : Task(objective, R.string.time_elapsed) {
 
         override fun isCompleted(): Boolean =
-            true
+            objective.isStarted && System.currentTimeMillis() - objective.startedOn >= minimumDuration
 
         override fun isCompleted(trueTime: Long): Boolean {
-            return true
+            return objective.isStarted && trueTime - objective.startedOn >= minimumDuration
         }
 
         override val progress: String
@@ -129,7 +133,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
 
     inner class UITask internal constructor(objective: Objective, @StringRes task: Int, private val spIdentifier: String, val code: (context: Context, task: UITask, callback: Runnable) -> Unit) : Task(objective, task) {
 
-        var answered: Boolean = true
+        var answered: Boolean = false
             set(value) {
                 field = value
                 sp.putBoolean("UITask_$spIdentifier", value)
@@ -145,7 +149,7 @@ abstract class Objective(injector: HasAndroidInjector, spName: String, @StringRe
     inner class ExamTask internal constructor(objective: Objective, @StringRes task: Int, @StringRes val question: Int, private val spIdentifier: String) : Task(objective, task) {
 
         var options = ArrayList<Option>()
-        var answered: Boolean = true
+        var answered: Boolean = false
             set(value) {
                 field = value
                 sp.putBoolean("ExamTask_$spIdentifier", value)

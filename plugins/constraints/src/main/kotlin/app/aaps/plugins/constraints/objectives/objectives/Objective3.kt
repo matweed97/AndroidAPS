@@ -16,7 +16,7 @@ class Objective3 @Inject constructor(injector: HasAndroidInjector) : Objective(i
         tasks.add(
             object : Task(this, R.string.objectives_manualenacts) {
                 override fun isCompleted(): Boolean {
-                    return true
+                    return sp.getInt(app.aaps.core.utils.R.string.key_ObjectivesmanualEnacts, 0) >= MANUAL_ENACTS_NEEDED
                 }
 
                 override val progress: String
